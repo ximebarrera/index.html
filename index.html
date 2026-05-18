@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación</title>
+
+<style>
+body{
+    background:#e9e9e9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.tarjeta{
+    width:450px;
+    border-radius:30px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    padding-bottom:30px;
+
+    background: url('fondo.jpg') center/cover no-repeat;
+}
+
+.tarjeta::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: rgba(255,255,255,0.35);
+    z-index:1;
+}
+
+.contenido{
+    position:relative;
+    z-index:2;
+    padding-top:40px;
+}
+
+.nina{
+    width:150px;
+    margin-bottom:10px;
+}
+
+.panel{
+    background:rgba(255,255,255,0.75);
+    margin:0 30px;
+    padding:30px;
+    border-radius:25px;
+}
+
+/* TEXTOS */
+.titulo{
+    font-family:'Brush Script MT', cursive;
+    color:#7a4b3a;
+    font-size:34px;
+    margin:0;
+}
+
+.oracion{
+    color:#777;
+    font-size:14px;
+    font-style:italic;
+    line-height:1.6;
+    margin:15px 0;
+}
+
+.nombre{
+    font-family:'Brush Script MT', cursive;
+    color:#d19494;
+    font-size:60px;
+    margin:10px 0;
+}
+
+.datos{
+    color:#555;
+    font-size:14px;
+    line-height:1.6;
+}
+
+/* 🎨 CONTADOR ELEGANTE */
+.contador-box{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:20px;
+}
+
+.tiempo{
+    background: linear-gradient(145deg,#f8eaea,#ffffff);
+    padding:12px;
+    border-radius:15px;
+    min-width:65px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.tiempo span{
+    display:block;
+    font-size:22px;
+    font-weight:bold;
+    color:#7a4b3a;
+    transition: transform 0.3s;
+}
+
+.tiempo span.cambio{
+    transform: translateY(-5px);
+}
+
+.tiempo p{
+    margin:0;
+    font-size:12px;
+    color:#999;
+}
+
+#mensaje-final{
+    margin-top:15px;
+    font-weight:bold;
+    color:#c98c8c;
+    font-size:20px;
+}
+
+/* BOTÓN */
+.boton{
+    background:#c98c8c;
+    color:white;
+    padding:12px 25px;
+    border-radius:25px;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:20px;
+    font-weight:bold;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    transition:.2s;
+}
+
+.boton:hover{
+    transform:scale(1.05);
+}
+/* 📱 RESPONSIVE (celulares) */
+@media (max-width: 500px){
+
+    .tarjeta{
+        width: 95%;
+        border-radius:20px;
+    }
+
+    .panel{
+        margin:0 15px;
+        padding:20px;
+    }
+
+    .nombre{
+        font-size:45px;
+    }
+
+    .titulo{
+        font-size:26px;
+    }
+
+    .oracion{
+        font-size:13px;
+    }
+
+    .datos{
+        font-size:13px;
+    }
+
+    .nina{
+        width:120px;
+    }
+
+    .contador-box{
+        gap:8px;
+    }
+
+    .tiempo{
+        min-width:55px;
+        padding:8px;
+    }
+
+    .tiempo span{
+        font-size:18px;
+    }
+
+    .boton{
+        padding:10px 20px;
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="tarjeta">
+
+    <div class="contenido">
+
+        <img src="nc.png" class="nina">
+
+        <div class="panel">
+
+            <h1 class="titulo">Mi Primera Comunión</h1>
+
+            <p class="oracion">
+                Querido Jesús: Haz que la pureza que invade mi almita se funda junto a la tuya en un abrazo lleno de ternura,
+                para que mis pequeños pasos de hoy crezcan en el futuro guiados por tu infinito amor.
+            </p>
+
+            <div class="nombre">Valentina</div>
+
+            <div class="datos">
+                📍 Ubicación: Casa Jasmin<br>
+                Entre calle Jasmin y Azucena<br><br>
+                 20 de Junio de 2026<br>
+                 15:00 hrs
+            </div>
+
+            <!-- ⏳ CONTADOR -->
+            <div class="contador-box">
+                <div class="tiempo">
+                    <span id="dias">0</span>
+                    <p>Días</p>
+                </div>
+                <div class="tiempo">
+                    <span id="horas">0</span>
+                    <p>Horas</p>
+                </div>
+                <div class="tiempo">
+                    <span id="minutos">0</span>
+                    <p>Min</p>
+                </div>
+                <div class="tiempo">
+                    <span id="segundos">0</span>
+                    <p>Seg</p>
+                </div>
+            </div>
+
+            <div id="mensaje-final"></div>
+
+            <a href="https://maps.app.goo.gl/2TqjQ42L88ce3Ntr8" class="boton">
+                Ver ubicación
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function animarCambio(id, valor){
+    const el = document.getElementById(id);
+    if(el.innerText != valor){
+        el.classList.add("cambio");
+        setTimeout(()=> el.classList.remove("cambio"),300);
+    }
+    el.innerText = valor;
+}
+
+function actualizarContador(){
+    const evento = new Date("June 20, 2026 15:00:00").getTime();
+    const ahora = new Date().getTime();
+
+    const diferencia = evento - ahora;
+
+    if(diferencia <= 0){
+        document.querySelector(".contador-box").style.display = "none";
+        document.getElementById("mensaje-final").innerHTML = "🎉 LLEGÓ LA HORA 🎉";
+        return;
+    }
+
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+    animarCambio("dias", dias);
+    animarCambio("horas", horas);
+    animarCambio("minutos", minutos);
+    animarCambio("segundos", segundos);
+}
+
+setInterval(actualizarContador, 1000);
+actualizarContador();
+</script>
+
+</body>
+</html>
